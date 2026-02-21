@@ -38,12 +38,15 @@ export interface Booking {
 export interface Vehicle {
   id: string
   model: string
-  category: 'sedan' | 'suv' | 'luxury'
+  category: 'sedan' | 'suv' | 'luxury' | 'jet'
   plate: string
+  tailNumber?: string
   status: 'available' | 'booked' | 'maintenance'
   location: string
   lat: number
   lng: number
+  pilotName?: string
+  pilotContact?: string
 }
 
 export interface Driver {

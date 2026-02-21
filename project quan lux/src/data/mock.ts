@@ -95,6 +95,19 @@ export const vehicles: Vehicle[] = [
     location: 'Lekki, Lagos',
     lat: 6.4969,
     lng: 3.5753
+  },
+  {
+    id: 'VH-901',
+    model: 'Gulfstream G650',
+    plate: 'QX-JET-01',
+    tailNumber: '5N-QLA',
+    category: 'jet',
+    status: 'available',
+    location: 'Murtala Muhammed Intl, Lagos',
+    lat: 6.5774,
+    lng: 3.3212,
+    pilotName: 'Captain Ibrahim Salisu',
+    pilotContact: '+2348091122334'
   }
 ]
 
