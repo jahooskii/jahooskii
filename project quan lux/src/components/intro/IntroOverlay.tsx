@@ -16,7 +16,7 @@ export const IntroOverlay = ({ onComplete }: IntroOverlayProps) => {
   }, [onComplete])
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90">
       <motion.div
         className="relative flex h-[340px] w-[460px] flex-col items-center justify-center overflow-hidden rounded-[36px] border border-gold-400/40 bg-gradient-to-br from-black via-[#0f1118] to-black shadow-luxe"
         style={{ transformStyle: 'preserve-3d', perspective: 1200 }}
