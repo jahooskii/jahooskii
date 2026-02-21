@@ -15,7 +15,8 @@ import { Toaster } from 'sonner'
 import { IntroOverlay } from '@/components/intro/IntroOverlay'
 import { useAuth } from '@/context/AuthContext'
 import { AdminLogin } from '@/components/auth/AdminLogin'
-import { ShieldCheck, UserCircle2 } from 'lucide-react'
+import { ShieldCheck, UserCircle2, Clock } from 'lucide-react'
+import { formatDateTimeNow, getStoredTimeZone, setStoredTimeZone, timeZoneOptions } from '@/utils/timezone'
 
 const pageCopy: Record<PageKey, { title: string; subtitle: string }> = {
   dashboard: {
@@ -119,6 +120,16 @@ export default function App() {
   const [activePage, setActivePage] = useState<PageKey>('rider')
   const [showLogin, setShowLogin] = useState(false)
   const [showIntro, setShowIntro] = useState(getInitialIntroState)
+  const [timeZone, setTimeZone] = useState(getStoredTimeZone)
+  const [clock, setClock] = useState(() => formatDateTimeNow(timeZone))
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setClock(formatDateTimeNow(timeZone))
+    }, 1000 * 30)
+
+    return () => clearInterval(interval)
+  }, [timeZone])
 
   useEffect(() => {
     if (!user) {
@@ -170,6 +181,12 @@ export default function App() {
     setActivePage('rider')
   }
 
+  const handleTimeZoneChange = (value: string) => {
+    setTimeZone(value)
+    setStoredTimeZone(value)
+    setClock(formatDateTimeNow(value))
+  }
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-black text-white">
@@ -191,6 +208,10 @@ export default function App() {
             actions={
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2 rounded-full border border-border/60 bg-black/40 px-4 py-2 text-xs text-muted-foreground">
+                  <Clock size={14} />
+                  <span className="text-xs text-muted-foreground">{clock}</span>
+                </div>
+                <div className="flex items-center gap-2 rounded-full border border-border/60 bg-black/40 px-4 py-2 text-xs text-muted-foreground">
                   <UserCircle2 size={14} />
                   <select
                     className="bg-transparent text-xs text-muted-foreground"
@@ -202,6 +223,20 @@ export default function App() {
                     <option value="dispatcher">Dispatcher</option>
                     <option value="driver">Driver</option>
                     <option value="rider">Rider</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-2 rounded-full border border-border/60 bg-black/40 px-4 py-2 text-xs text-muted-foreground">
+                  <select
+                    className="bg-transparent text-xs text-muted-foreground"
+                    value={timeZone}
+                    onChange={(event) => handleTimeZoneChange(event.target.value)}
+                    disabled={!isAdmin}
+                  >
+                    {timeZoneOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <button
