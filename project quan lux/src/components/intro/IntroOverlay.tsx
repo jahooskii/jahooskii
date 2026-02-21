@@ -6,7 +6,7 @@ interface IntroOverlayProps {
 }
 
 export const IntroOverlay = ({ onComplete }: IntroOverlayProps) => {
-  const [logoSrc, setLogoSrc] = useState('/quanlux-logo.png')
+  const [logoSrc, setLogoSrc] = useState('./quanlux-logo.png')
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,7 +51,7 @@ export const IntroOverlay = ({ onComplete }: IntroOverlayProps) => {
           />
           <motion.img
             src={logoSrc}
-            onError={() => setLogoSrc('/quanlux-logo.svg')}
+            onError={() => setLogoSrc('./quanlux-logo.svg')}
             alt="Quan Lux"
             className="h-32 w-32 rounded-full border border-white/10 bg-black/60 object-contain"
             initial={{ scale: 0.85 }}
